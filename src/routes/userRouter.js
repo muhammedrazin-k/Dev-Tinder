@@ -14,14 +14,14 @@ router.get('/user/requests/received',userAuth,async(req,res)=>{
         const connectionRequest=await connectionRequestModel.find({
             toUserId:loggedInUser._id,
             status:'interested'
-        }).populate('fromUserId',["firstName",'lastName','photoUrl'])
+        }).populate('fromUserId',["firstName",'lastName','photoUrl','age','about','gender'])
         if(!connectionRequest){
             return res.status(500).json({
                 message:'there is no connection at all'
             })
         }
-
-        res.status(200).json({message:connectionRequest})
+        console.log(connectionRequest)
+        res.status(200).json({data:connectionRequest})
     } catch (error) {
         res.status(500).json({message:'something went wrong check again'})
     }
@@ -36,8 +36,8 @@ router.get('/user/connections',userAuth,async (req,res)=>{
                 {toUserId:loggedInUser._id, status:'accepted'},
                 {fromUserId:loggedInUser._id, status:'accepted'}
             ]
-        }).populate('fromUserId',['firstName','lastName','photoUrl'])
-        .populate('toUserId',["firstName",'lastName','photoUrl'])
+        }).populate('fromUserId',['firstName','lastName','photoUrl','about',])
+        .populate('toUserId',["firstName",'lastName','photoUrl','about','age','gender'])
 
         const data= connectionRequest.map((row) => {
             if (row.fromUserId._id.equals(loggedInUser._id)) {
@@ -48,7 +48,7 @@ router.get('/user/connections',userAuth,async (req,res)=>{
 
         console.log(data)
 
-        res.status(200).json({message:data})
+        res.status(200).json({data:data})
         
         
     } catch (error) {
@@ -86,7 +86,7 @@ router.get('/feed',userAuth,async(req,res)=>{
                 {_id:{$nin:Array.from(hideUserFromFeed)}},
                 {_id:{$ne:loggedInUser._id}}
             ]
-        }).select('firstName lastName photoUrl age')
+        }).select('firstName lastName photoUrl age gender about')
         .skip(skip)
         .limit(limit)
         res.status(200).json({feedUsers})

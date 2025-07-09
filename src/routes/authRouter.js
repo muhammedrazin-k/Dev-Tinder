@@ -38,11 +38,11 @@ router.post("/signup", async (req, res) => {
       });
       console.log(user);
 
-      const token=await user.getJWT()
-  
-      await user.save();
       
-      res.cookie("token",token).send("user added succesfully");
+      const savedUser= await user.save();
+      const token=await savedUser.getJWT()
+      
+      res.cookie("token",token).json({message:"user added succesfully", data:savedUser});
     } catch (err) {
       res.status(400).send("ERROR :" + err.message);
     }
@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
     try {
       const { EmailId, password } = req.body;
   
-      const userdata = await User.findOne({ EmailId: EmailId });
+      const userdata = await User.findOne({ EmailId:EmailId });
       if (!userdata) {
         throw new Error(" invalid credential..!");
       }
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
       } else {
         const token = await userdata.getJWT()
   
-        res.cookie("token", token).send("successfully logged in");
+        res.cookie("token", token).json(userdata);
       }
     } catch (err) {
       res.status(500).send("ERROR :" + err.message);

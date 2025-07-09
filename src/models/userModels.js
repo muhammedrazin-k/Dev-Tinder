@@ -51,12 +51,11 @@ const userSchema = new mongoose.Schema({
 
   photoUrl: {
     type: String,
-    default:
-      "https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2210.jpg?semt=ais_hybrid&w=740",
+    default: "https://www.freepik.com/free-vector/blue-circle-with-white-user_145857007.htm#fromView=search&page=1&position=0&uuid=80b1c36e-dbeb-4dda-aa81-aed908e7d484&query=User+Profile+small+image",
   },
   about: {
     type: String,
-    default: "this a default value",
+    default: "this was the one of the most valueable about section in field",
   },
   skills: {
     type: [String],
@@ -67,7 +66,7 @@ userSchema.methods.getJWT=async function(){
 
   const user= this ;
 
-  const token=await jwt.sign({id:user._id},"secret123",{expiresIn:"1h"})
+  const token=await jwt.sign({id:user._id},"secret123",{expiresIn:"1d"})
 
   return token
 
