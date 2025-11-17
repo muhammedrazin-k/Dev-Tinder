@@ -36,7 +36,6 @@ router.post("/signup", async (req, res) => {
         photoUrl,
         skills,
       });
-      console.log(user);
 
       
       const savedUser= await user.save();

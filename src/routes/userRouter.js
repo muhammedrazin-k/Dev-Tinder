@@ -20,7 +20,6 @@ router.get('/user/requests/received',userAuth,async(req,res)=>{
                 message:'there is no connection at all'
             })
         }
-        console.log(connectionRequest)
         res.status(200).json({data:connectionRequest})
     } catch (error) {
         res.status(500).json({message:'something went wrong check again'})
@@ -46,7 +45,6 @@ router.get('/user/connections',userAuth,async (req,res)=>{
             return row.fromUserId
         })
 
-        console.log(data)
 
         res.status(200).json({data:data})
         
