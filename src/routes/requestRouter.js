@@ -3,6 +3,8 @@ const { userAuth } = require("../middlewares/auth");
 const User=require('../models/userModels');
 const connectionRequestModel = require('../models/connectionRequestModel');
 
+const sendEmail=require('../utils/sendEmail')
+
 const router=express.Router()
 
 
@@ -42,6 +44,8 @@ router.post('/request/send/:status/:toUserId', userAuth,async (req,res)=>{
       })
 
       await connectionRequest.save()
+
+      const emailRes=await sendEmail.sendEmail("mail@devzin.xyz",'m.razin600@gmail.com',req.user.firstName,existingUser.firstName)
       
       res.status(200).json({
         message:req.user.firstName + " is "+status +" on " + existingUser.firstName
