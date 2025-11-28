@@ -8,6 +8,7 @@ require('dotenv').config()
 
 const app = express();
 
+require('./utils/cronJobs.js')
 app.use(cors({
   origin:'http://localhost:5173',
   credentials:true
@@ -19,11 +20,14 @@ const authRouter=require('./routes/authRouter.js')
 const profileRouter=require('./routes/profileRouter.js')
 const requestRouter=require('./routes/requestRouter.js')
 const userRouter=require('./routes/userRouter.js')
+const paymentRouter=require('./routes/paymentRouter.js')
 
 app.use('/' ,authRouter)
 app.use('/',profileRouter)
 app.use('/',requestRouter)
 app.use('/',userRouter)
+app.use('/',paymentRouter)
+
 
 
 

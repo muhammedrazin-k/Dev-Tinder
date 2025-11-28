@@ -45,7 +45,7 @@ router.post('/request/send/:status/:toUserId', userAuth,async (req,res)=>{
 
       await connectionRequest.save()
 
-      const emailRes=await sendEmail.sendEmail("mail@devzin.xyz",'m.razin600@gmail.com',req.user.firstName,existingUser.firstName)
+      const emailRes=await sendEmail.sendEmail("mail@devzin.xyz",'m.razin600@gmail.com','hai all this was sdk sandbox from aws ',`the ${req.user.firstName} send the connection request to ${existingUser.firstName} thankyou ...!`)
       
       res.status(200).json({
         message:req.user.firstName + " is "+status +" on " + existingUser.firstName
