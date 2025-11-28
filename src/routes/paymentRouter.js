@@ -91,4 +91,17 @@ router.post("/payment/create", userAuth, async (req, res) => {
     }
  })
 
+ router.get('/premium/verify',userAuth,async(req,res)=>{
+    try {
+        const user=req.user
+        if(user.isPremium){
+            return res.json({isPremium:true})
+        }
+        return res.json({isPremium:false})
+
+    } catch (err) {
+        res.status(400).json({message:"ERROR: "+err.message})
+        
+    }
+ })
 module.exports = router;
